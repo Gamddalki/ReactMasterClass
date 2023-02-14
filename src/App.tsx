@@ -2,6 +2,7 @@ import Router from "./Router";
 import { createGlobalStyle } from "styled-components";
 
 const GloalStyle = createGlobalStyle`
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap');
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -48,6 +49,15 @@ q:before, q:after {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+*{
+  box-sizing: border-box;
+}
+body{
+  font-family: 'Nanum Gothic', sans-serif;
+}
+a{
+  text-decoration: none;
 }
 `;
 
