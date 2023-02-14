@@ -55,6 +55,8 @@ table {
 }
 body{
   font-family: 'Nanum Gothic', sans-serif;
+  background-color: ${(props) => props.theme.bgColor};
+  color: ${(props) => props.theme.textColor};
 }
 a{
   text-decoration: none;
