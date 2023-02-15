@@ -6,10 +6,11 @@ import {
   useRouteMatch,
 } from "react-router";
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useQuery } from "react-query";
 import Chart from "./Chart";
 import Price from "./Price";
 import { Link } from "react-router-dom";
+import { fetchCoinInfo, fetchPriceInfo } from "../api";
 
 const Container = styled.div`
   padding: 0 20px;
@@ -91,7 +92,7 @@ interface RouteState {
   name: string;
 }
 
-interface InfoData {
+interface IInfo {
   id: string;
   name: string;
   symbol: string;
@@ -112,7 +113,7 @@ interface InfoData {
   last_data_at: string;
 }
 
-interface PriceData {
+interface IPrice {
   id: string;
   name: string;
   symbol: string;
@@ -148,26 +149,18 @@ interface PriceData {
 
 function Coin() {
   const { coinId } = useParams<CoinParams>();
-  const [loading, setLoading] = useState(true);
   const { state } = useLocation<RouteState>();
-  const [info, setInfo] = useState<InfoData>();
-  const [price, setPrice] = useState<PriceData>();
   const priceMatch = useRouteMatch("/:coinId/price");
   const chartMatch = useRouteMatch("/:coinId/chart");
-  useEffect(() => {
-    (async () => {
-      const infoData = await (
-        await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)
-      ).json();
-      console.log(infoData);
-      const priceData = await (
-        await fetch(`https://api.coinpaprika.com/v1/tickers/${coinId}`)
-      ).json();
-      setInfo(infoData);
-      setPrice(priceData);
-      setLoading(false);
-    })();
-  }, [coinId]);
+  const { isLoading: infoLoading, data: infoData } = useQuery<IInfo>(
+    ["info", coinId],
+    () => fetchCoinInfo(coinId)
+  );
+  const { isLoading: priceLoading, data: priceData } = useQuery<IPrice>(
+    ["price", coinId],
+    () => fetchPriceInfo(coinId)
+  );
+  const loading = infoLoading || priceLoading;
   return (
     <Container>
       <Header>
@@ -175,7 +168,7 @@ function Coin() {
           {state?.name ? (
             <>
               <img
-                src={`https://coinicons-api.vercel.app/api/icon/${info?.symbol.toLowerCase()}`}
+                src={`https://coinicons-api.vercel.app/api/icon/${infoData?.symbol.toLowerCase()}`}
               />
               {state.name}
             </>
@@ -184,9 +177,9 @@ function Coin() {
           ) : (
             <>
               <img
-                src={`https://coinicons-api.vercel.app/api/icon/${info?.symbol.toLowerCase()}`}
+                src={`https://coinicons-api.vercel.app/api/icon/${infoData?.symbol.toLowerCase()}`}
               />
-              {info?.name}
+              {infoData?.name}
             </>
           )}
         </Title>
@@ -198,26 +191,26 @@ function Coin() {
           <Overview>
             <OverviewItem>
               <span>Rank:</span>
-              <span>{info?.rank}</span>
+              <span>{infoData?.rank}</span>
             </OverviewItem>
             <OverviewItem>
               <span>Symbol:</span>
-              <span>${info?.symbol}</span>
+              <span>${infoData?.symbol}</span>
             </OverviewItem>
             <OverviewItem>
               <span>Open Source:</span>
-              <span>{info?.open_source ? "Yes" : "No"}</span>
+              <span>{infoData?.open_source ? "Yes" : "No"}</span>
             </OverviewItem>
           </Overview>
-          <Description>{info?.description}</Description>
+          <Description>{infoData?.description}</Description>
           <Overview>
             <OverviewItem>
               <span>Total Suply:</span>
-              <span>{price?.total_supply}</span>
+              <span>{priceData?.total_supply}</span>
             </OverviewItem>
             <OverviewItem>
               <span>Max Supply:</span>
-              <span>{price?.max_supply}</span>
+              <span>{priceData?.max_supply}</span>
             </OverviewItem>
           </Overview>
 
