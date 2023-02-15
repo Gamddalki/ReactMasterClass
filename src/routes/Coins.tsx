@@ -44,6 +44,11 @@ const Img = styled.img`
   margin-right: 15px;
 `;
 
+const Title = styled.h1`
+  font-size: 48px;
+  color: ${(props) => props.theme.accentColor};
+`;
+
 interface CoinInterface {
   id: string;
   name: string;
@@ -53,11 +58,6 @@ interface CoinInterface {
   is_active: boolean;
   type: string;
 }
-
-const Title = styled.h1`
-  font-size: 48px;
-  color: ${(props) => props.theme.accentColor};
-`;
 
 function Coins() {
   const [coins, setCoins] = useState<CoinInterface[]>([]);
@@ -81,7 +81,9 @@ function Coins() {
         <CoinsList>
           {coins.map((coin) => (
             <Coin key={coin.id}>
-              <Link to={`/${coin.id}`}>
+              <Link
+                to={{ pathname: `/${coin.id}`, state: { name: coin.name } }}
+              >
                 <Img
                   src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
                 />
