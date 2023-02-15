@@ -30,7 +30,7 @@ const Coin = styled.li`
     align-items: center;
   }
   &:hover {
-    background-color: black;
+    background-color: #f0f0f0;
     transition: background-color 0.2s ease-in-out;
     a {
       color: ${(props) => props.theme.accentColor};
