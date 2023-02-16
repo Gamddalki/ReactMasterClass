@@ -12,6 +12,8 @@ import Chart from "./Chart";
 import Price from "./Price";
 import { Link } from "react-router-dom";
 import { fetchCoinInfo, fetchPriceInfo } from "../api";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { isDarkAtom } from "../atoms";
 
 const Container = styled.div`
   padding: 0 20px;
@@ -19,9 +21,9 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 const Header = styled.header`
-  height: 10vh;
+  height: 12vh;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   img {
     width: 25px;
@@ -35,7 +37,8 @@ const Loader = styled.span`
   display: block;
 `;
 const Title = styled.h1`
-  font-size: 48px;
+  font-size: 30px;
+  font-weight: 600;
   color: ${(props) => props.theme.accentColor};
   display: flex;
   align-items: center;
@@ -155,6 +158,9 @@ interface IPrice {
 }
 
 function Coin() {
+  const isDark = useRecoilValue(isDarkAtom);
+  const setDarkAtom = useSetRecoilState(isDarkAtom);
+  const toggleDarkAtom = () => setDarkAtom((prev) => !prev);
   const { coinId } = useParams<CoinParams>();
   const { state } = useLocation<RouteState>();
   const priceMatch = useRouteMatch("/:coinId/price");
@@ -201,6 +207,17 @@ function Coin() {
             </>
           )}
         </Title>
+        {isDark ? (
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/702/702471.png"
+            onClick={toggleDarkAtom}
+          />
+        ) : (
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/606/606807.png"
+            onClick={toggleDarkAtom}
+          />
+        )}
       </Header>
       {loading ? (
         <Loader>Loading...</Loader>

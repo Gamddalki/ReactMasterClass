@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { useQuery } from "react-query";
 import { fetchCoins } from "../api";
 import { Helmet } from "react-helmet";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { isDarkAtom } from "../atoms";
 
 const Container = styled.div`
   padding: 0 20px;
@@ -10,10 +12,15 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 const Header = styled.header`
-  height: 10vh;
+  height: 12vh;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  img {
+    width: 25px;
+    height: 25px;
+    margin-right: 15px;
+  }
 `;
 const Loader = styled.span`
   text-align: center;
@@ -48,7 +55,8 @@ const Img = styled.img`
 `;
 
 const Title = styled.h1`
-  font-size: 48px;
+  font-size: 30px;
+  font-weight: 900;
   color: ${(props) => props.theme.accentColor};
 `;
 
@@ -63,14 +71,28 @@ interface ICoin {
 }
 
 function Coins() {
+  const isDark = useRecoilValue(isDarkAtom);
+  const setDarkAtom = useSetRecoilState(isDarkAtom);
+  const toggleDarkAtom = () => setDarkAtom((prev) => !prev);
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
   return (
     <Container>
       <Helmet>
-        <title>코인</title>
+        <title>코인이얼마인코</title>
       </Helmet>
       <Header>
-        <Title>코인</Title>
+        <Title>코인이얼마인코</Title>
+        {isDark ? (
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/702/702471.png"
+            onClick={toggleDarkAtom}
+          />
+        ) : (
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/606/606807.png"
+            onClick={toggleDarkAtom}
+          />
+        )}
       </Header>
       {isLoading ? (
         <Loader>Loading...</Loader>
