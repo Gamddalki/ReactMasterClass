@@ -49,7 +49,7 @@ const Title = styled.h1`
 const Overview = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: white;
+  background-color: ${(props) => props.theme.coinbtnColor};
   padding: 15px 20px;
   border-radius: 15px;
 `;
@@ -80,7 +80,8 @@ const Tab = styled.span<{ isActive: boolean }>`
   text-transform: uppercase;
   font-size: 13px;
   font-weight: 400;
-  background-color: ${(props) => (props.isActive ? "white" : "#f0f0f0")};
+  background-color: ${(props) =>
+    props.isActive ? props.theme.coinbtnhoverColor : props.theme.coinbtnColor};
   border-radius: 15px;
   color: ${(props) =>
     props.isActive ? props.theme.accentColor : props.theme.textColor};
