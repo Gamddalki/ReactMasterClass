@@ -23,6 +23,11 @@ const Header = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
+  img {
+    width: 25px;
+    height: 25px;
+    margin-right: 15px;
+  }
 `;
 const Loader = styled.span`
   text-align: center;
@@ -173,6 +178,9 @@ function Coin() {
         </title>
       </Helmet>
       <Header>
+        <a href="/">
+          <img src="https://cdn-icons-png.flaticon.com/512/3114/3114883.png" />
+        </a>
         <Title>
           {state?.name ? (
             <>
