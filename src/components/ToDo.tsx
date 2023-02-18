@@ -10,6 +10,7 @@ function ToDo({ text, condition, id }: IToDo) {
     setToDos((oldToDos) => {
       const targetIndex = oldToDos.findIndex((toDo) => toDo.id === id);
       const newToDo = { text, id, condition: name as any };
+      console.log(oldToDos);
       return [
         ...oldToDos.slice(0, targetIndex),
         newToDo,
@@ -20,9 +21,21 @@ function ToDo({ text, condition, id }: IToDo) {
   return (
     <li>
       <span>{text}</span>
-      {condition !== "TO_DO" && <button onClick={onClick}>🛫</button>}
-      {condition !== "DOING" && <button onClick={onClick}>✈️</button>}
-      {condition !== "DONE" && <button onClick={onClick}>🛬</button>}
+      {condition !== "TO_DO" && (
+        <button name="TO_DO" onClick={onClick}>
+          🛫
+        </button>
+      )}
+      {condition !== "DOING" && (
+        <button name="DOING" onClick={onClick}>
+          ✈️
+        </button>
+      )}
+      {condition !== "DONE" && (
+        <button name="DONE" onClick={onClick}>
+          🛬
+        </button>
+      )}
     </li>
   );
 }
