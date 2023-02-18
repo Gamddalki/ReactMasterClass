@@ -22,17 +22,17 @@ function ToDo({ text, condition, id }: IToDo) {
     <li>
       <span>{text}</span>
       {condition !== Conditions.TO_DO && (
-        <button name="TO_DO" onClick={onClick}>
+        <button name={Conditions.TO_DO} onClick={onClick}>
           🛫
         </button>
       )}
       {condition !== Conditions.DOING && (
-        <button name="DOING" onClick={onClick}>
+        <button name={Conditions.DOING} onClick={onClick}>
           ✈️
         </button>
       )}
       {condition !== Conditions.DONE && (
-        <button name="DONE" onClick={onClick}>
+        <button name={Conditions.DONE} onClick={onClick}>
           🛬
         </button>
       )}
