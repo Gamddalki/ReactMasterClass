@@ -1,5 +1,5 @@
 import { useSetRecoilState } from "recoil";
-import { IToDo, toDoState } from "../atoms";
+import { Conditions, IToDo, toDoState } from "../atoms";
 
 function ToDo({ text, condition, id }: IToDo) {
   const setToDos = useSetRecoilState(toDoState);
@@ -21,17 +21,17 @@ function ToDo({ text, condition, id }: IToDo) {
   return (
     <li>
       <span>{text}</span>
-      {condition !== "TO_DO" && (
+      {condition !== Conditions.TO_DO && (
         <button name="TO_DO" onClick={onClick}>
           🛫
         </button>
       )}
-      {condition !== "DOING" && (
+      {condition !== Conditions.DOING && (
         <button name="DOING" onClick={onClick}>
           ✈️
         </button>
       )}
-      {condition !== "DONE" && (
+      {condition !== Conditions.DONE && (
         <button name="DONE" onClick={onClick}>
           🛬
         </button>
