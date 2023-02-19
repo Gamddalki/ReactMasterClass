@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import ToDoList from "./components/ToDoList";
+import { DragDropContext } from "react-beautiful-dnd";
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap');
@@ -67,12 +67,7 @@ a{
 `;
 
 function App() {
-  return (
-    <>
-      <GlobalStyle />
-      <ToDoList />
-    </>
-  );
+  return <></>;
 }
 
 export default App;
